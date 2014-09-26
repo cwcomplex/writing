@@ -1,0 +1,39 @@
+\documentclass[11pt]{amsart}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\title{Minimal Square Enclosure of a Centered Hexagon}
+\author{Andrew Reiter}
+%\date{}                                           % Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+\section{}
+The centered hexagons are well-known and can be generated as shown by 
+Wolfram's mathworld and other locations (insert references). I look at the minimal
+square required to enclose a centered hexagon.
+
+If we number the points in the hexagon starting with 0 and iterating in an $Ond$ 
+manner (reference!), the end point will be the sequence
+\[
+c_i = \{ 6, 18, 36, 60, 90, 126, \ldots \}_{i=1}
+\]
+
+\textbf{conjecture}
+Let $\alpha_0 = 2$ and $\alpha_{i+1} = \alpha_{i} - 3$. Then the length of the sides
+of the minimal enclosing square lattice is
+\[
+\frac{c_i}{6} + \alpha_{i}
+\]
+
+%\subsection{}
+
+
+
+\end{document}  
