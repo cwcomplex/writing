@@ -1,0 +1,90 @@
+\documentclass[11pt]{amsart}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{xcolor}
+\usepackage{listings}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\title{Integer Points on Elliptic Curves and Radii of Circles}
+\author{Andrew Reiter}
+%\date{}                                           % Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+
+\section{Idea}
+First off we know from Siegel that set of integer points of elliptic curves is finite for a given curve (I hope I remember that right :D).
+
+In looking at integer points of $y^2 = x^3$ you can notice that the first integral points are 
+\[
+	\{x_k, y_k \} = \{ (0,0), (1, \pm 1), (4, \pm 8), (9, \pm 27), (16, \pm 64), (25, \pm 125)\ldots \}
+\]
+If you let $(0,0)$ be the center of a circle with radius $(x_{j = i\ge1}, y_{j})$ then the progression
+of radii is 
+\[
+	\{ r_k \} = \{ 0, 1^2 \sqrt{2}, 2^2 \sqrt{5}, 3^2 \sqrt{10}, 4^2 \sqrt{17}, 5^2 \sqrt{26}, \ldots \}
+\]
+for the points shown above. We can split this up
+\[
+	r_k = f(k) \sqrt{s(k, s(k-1))}
+\]
+Where $f(k) = k^2$ and 
+\begin{align*}
+	s(0, s(-1)) &= 0 \\
+	s(1, s(0)) &= s(0) + 2(i) - 1 = 1 + 1 = 2 \\
+	s(2, s(1)) &= 2 + (2(2)-1) = 5\\
+	s(3, s(2)) &= 5 + (2(3) - 1) = 10
+\end{align*}
+and so on.
+I did not look at the progression of $\theta$, the angle from $y = 0$ and $x > 0$, as we would really just be looking at $\frac{y}{x}$.
+
+
+\section{code? }
+To see if I could quickly find integral points of other ECs, I wrote python script to help look at $x,y \in [0,N]$ and let $N = 1500$. I
+generate solution sets for $y$ and $x$ independently and then take the intersection to be the range values we are looking for
+from each solution set. This is memory usage is painful since I store the inverse maps, so we can quickly find the $x,y$ values
+from the set produced by the intersection. I also don't know how bad the intersection operation is in python, but whatever. Clearly C
+or assembly is faster, but :-/.
+
+\begin{lstlisting}
+import sys
+imap_sq = {}
+imap_rhs = {}
+A = 0
+B = 0
+def y2(x):
+        xx = x*x
+        imap_sq[xx] = x
+        return xx
+def x3(x):
+        global A, B
+        xx = x*x*x + A*x + B
+        imap_rhs[xx] = x
+        return xx
+def main():
+        global A
+        global B
+        if len(sys.argv) == 3:
+                A = int(sys.argv[1])
+                B = int(sys.argv[2]) 
+        elif len(sys.argv) == 2:
+                A = int(sys.argv[1])
+        ysq = map(y2, range(0, 1500))
+        rhs = map(x3, range(0, 1500))
+        intersex = set(ysq) & set(rhs)
+        for k in intersex:
+                print "(x, y) = (%d, %d)" % (imap_rhs[k], imap_sq[k])
+        return
+if __name__ == '__main__':
+        main()
+
+\end{lstlisting}
+
+
+
+\end{document}  
