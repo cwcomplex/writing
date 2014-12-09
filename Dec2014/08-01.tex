@@ -1,0 +1,29 @@
+\documentclass[11pt]{amsart}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\title{December 8}
+%\author{The Author}
+%\date{}                                           % Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+\section{Gibreath's Conjecture}
+%\subsection{}
+Define $d^k_n$ by $d^1_n = d_n$ and $d^{k+1}_n = \left|d^k_{n+1} - d^k_n\right|$. Recall that $d_n$ is the difference between consecutive primes.
+
+So this is like: $\{ 2, 3, 5, 7 \} \rightarrow \{ 1, 2, 2 \} \rightarrow \{ 1, 0 \} \rightarrow \{ 1\}$
+
+Lost proof for all $k$, $d^k_1 = 1$. It has been shown for large $k$. So idea would be to prove that. 
+
+Another thing is that any sequence of 2 + odds is capable of this. 
+
+I am also interested in permutations of the initial set and which lead to the reduction condition.
+
+\end{document}  
